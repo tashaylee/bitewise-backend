@@ -1,13 +1,19 @@
-from django.shortcuts import render
 from rest_framework import viewsets
 from .serializers import *
 from .models import *
 
-# Create your views here.
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 
+# Create your views here.
 class BudgetView(viewsets.ModelViewSet):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
     serializer_class = BudgetSerializer
-    queryset = Budget.objects.all()
+
+    def get_queryset(self):
+        user = self.request.user
+        return Budget.objects.filter(user=user)
 
 class UserView(viewsets.ModelViewSet):
     serializer_class = UserSerializer

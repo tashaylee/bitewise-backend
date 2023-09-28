@@ -5,7 +5,7 @@ class CommitmentCountAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'year', 'month', 'week', 'count')
 
 class BudgetAdmin(admin.ModelAdmin):
-    list_display = ('id', 'monthlyAmount', 'groceryAmount', 'otherAmount')
+    list_display = ('id', 'user', 'monthlyAmount', 'groceryAmount', 'otherAmount')
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ('id', 'budget', 'first_name', 'last_name', 'email')
