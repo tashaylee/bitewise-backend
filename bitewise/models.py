@@ -8,13 +8,9 @@ class User(AbstractUser):
 
 class Budget(models.Model):
     user = models.OneToOneField(User, unique=True, on_delete=models.PROTECT)
-    monthlyAmount = models.FloatField()
-    groceryAmount = models.DecimalField(max_digits = 5,
-                                        decimal_places = 2,
-                                        blank = True)
-    otherAmount = models.DecimalField(max_digits = 5,
-                                        decimal_places = 2,
-                                        blank = True)
+    monthlyAmount = models.FloatField(default=0)
+    groceryAmount = models.FloatField(default=0)
+    otherAmount = models.FloatField(default=0)
 
 class CommitmentCount(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
