@@ -15,10 +15,15 @@ class CommitmentCountSerializer(serializers.ModelSerializer):
 
 class BudgetSerializer(serializers.ModelSerializer):
     user_id = serializers.CharField(source='user.id')
+    otherAmount = serializers.SerializerMethodField('calculate_other')
+
     class Meta:
         model = Budget
         fields = ('user_id', 'monthlyAmount', 'groceryAmount', 'otherAmount')
         extra_kwargs = {'user': {'read_only': True}}
+    
+    def calculate_other(self, instance):
+        return 100 - instance.groceryAmount
 
     def create(self, validated_data, *args, **kwargs):
         user_id = validated_data.pop('user')
