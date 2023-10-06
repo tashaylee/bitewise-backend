@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 from .serializers import *
 from .models import *
+from datetime import datetime
 
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -21,7 +22,7 @@ class BudgetView(viewsets.ModelViewSet):
 
     def create(self, request):
         serializer = BudgetSerializer(data=request.data)
-        user = request.user.id
+        user = request.user
         
         if serializer.is_valid():
             serializer.save(user=user)
@@ -36,7 +37,38 @@ class UserView(viewsets.ModelViewSet):
 
 class CommitmentCountView(viewsets.ModelViewSet):
     serializer_class = CommitmentCountSerializer
-    queryset = CommitmentCount.objects.all()
+    permission_classes = [IsAuthenticated,]
+
+    def get_queryset(self):
+        user = self.request.user
+        now = datetime.now()
+        commitment_counts = CommitmentCount.objects.filter(
+            user=user, created_at__year=now.year, created_at__month=now.month, created_at__week=now.isocalendar().week).order_by('-created_at')
+        return commitment_counts
+
+    def create(self, request):
+        serializer = CommitmentCountSerializer(data=request.data)
+        user = request.user
+        
+        if serializer.is_valid():
+            serializer.save(user=user)
+            return Response({'commitment_count_id' : {serializer.instance.id}}, status=200)
+        return Response(serializer.errors,status=400)
+
+
+class MealCommitmentView(viewsets.ModelViewSet):
+    serializer_class = MealCommitmentSerializer
+    queryset = MealCommitment.objects.all()
+    permission_classes = [IsAuthenticated,]
+
+    # def get_queryset(self):
+    #     user = self.request.user
+    #     now = datetime.now()
+    #     commitment_count = CommitmentCount.objects.filter(
+    #         user=user, created_at__year=now.year, created_at__month=now.month, created_at__week=now.isocalendar().week)
+    #     all_commitments = MealCommitment.objects.filter(commitment_count=commitment_count)
+    #     return all_commitments
+
 
 class HomeView(APIView):
     permission_classes = (IsAuthenticated, )
