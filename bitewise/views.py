@@ -2,6 +2,10 @@ from rest_framework import viewsets
 from .serializers import *
 from .models import *
 from datetime import datetime
+from django.db.models import Q
+from django.shortcuts import get_object_or_404
+from rest_framework.decorators import action
+
 
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -46,7 +50,7 @@ class CommitmentCountView(viewsets.ModelViewSet):
             user=user, created_at__year=now.year, created_at__month=now.month, created_at__week=now.isocalendar().week).order_by('-created_at')
         return commitment_counts
 
-    def create(self, request):
+    def create(self,request):
         serializer = CommitmentCountSerializer(data=request.data)
         user = request.user
         
@@ -61,13 +65,30 @@ class MealCommitmentView(viewsets.ModelViewSet):
     queryset = MealCommitment.objects.all()
     permission_classes = [IsAuthenticated,]
 
-    # def get_queryset(self):
-    #     user = self.request.user
-    #     now = datetime.now()
-    #     commitment_count = CommitmentCount.objects.filter(
-    #         user=user, created_at__year=now.year, created_at__month=now.month, created_at__week=now.isocalendar().week)
-    #     all_commitments = MealCommitment.objects.filter(commitment_count=commitment_count)
-    #     return all_commitments
+    def get_queryset(self):
+        user = self.request.user
+        now = datetime.now()
+        commitment_count = CommitmentCount.objects.filter(
+            user=user, created_at__year=now.year, created_at__month=now.month, created_at__week=now.isocalendar().week)
+        all_commitments = MealCommitment.objects.filter(commitment_count__in=commitment_count)
+        return all_commitments
+    
+    def update(self, request, pk=None):
+        meal_commitment = get_object_or_404(self.queryset, pk=pk)
+        
+        serializer = CommitmentCountSerializer(
+            instance=meal_commitment, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'meal_commitment_id': {serializer.instance.id}}, status=200)
+        return Response(serializer.errors, status=400)
+    
+    @action(detail=False, methods=['get'])
+    def incomplete(self, request, pk=None):
+        qs = self.queryset.filter(name=None, cost=0, achieved=None, activated=False)
+        serializer = self.serializer_class(qs, many=True)
+        return Response(serializer.data, status=200)
 
 
 class HomeView(APIView):

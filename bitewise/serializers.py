@@ -23,7 +23,7 @@ class MealCommitmentSerializer(serializers.ModelSerializer):
         model = MealCommitment
         fields = '__all__'
         read_only_fields = ('commitment_count',)
-    
+
 
 class BudgetSerializer(serializers.ModelSerializer):
     user_id = serializers.CharField(source='user.id')
