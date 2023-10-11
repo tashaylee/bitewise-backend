@@ -1,7 +1,6 @@
-from django.db.models.query import QuerySet
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .models import CommitmentCount, MealCommitment
+from .commitment.models import *
 
 
 @receiver(post_save, sender=CommitmentCount)

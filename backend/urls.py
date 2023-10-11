@@ -17,21 +17,24 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from bitewise import views
+from bitewise.shared import views as sharedviews
+from bitewise.budget import views as budgetviews
+from bitewise.commitment import views as commitmentviews
 from rest_framework_simplejwt import views as jwt_views
 
 router = routers.DefaultRouter()
-router.register(r'budgets', views.BudgetView, 'budget')
-router.register(r'users', views.UserView, 'user')
-router.register(r'commitmentcounts', views.CommitmentCountView, 'commitmentcount')
+router.register(r'budgets', budgetviews.BudgetView, 'budget')
+router.register(r'users', sharedviews.UserView, 'user')
+router.register(r'commitmentcounts',
+                commitmentviews.CommitmentCountView, 'commitmentcount')
 router.register(r'mealcommitments',
-                views.MealCommitmentView, 'mealcommitments')
+                commitmentviews.MealCommitmentView, 'mealcommitments')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
-    path('home/', views.HomeView.as_view(), name ='home'),
-    path('logout/', views.LogoutView.as_view(), name ='logout')
+    path('home/', sharedviews.HomeView.as_view(), name ='home'),
+    path('logout/', sharedviews.LogoutView.as_view(), name='logout')
 ]
