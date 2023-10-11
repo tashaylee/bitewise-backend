@@ -76,7 +76,7 @@ class MealCommitmentView(viewsets.ModelViewSet):
     def update(self, request, pk=None):
         meal_commitment = get_object_or_404(self.queryset, pk=pk)
         
-        serializer = CommitmentCountSerializer(
+        serializer = MealCommitmentSerializer(
             instance=meal_commitment, data=request.data, partial=True)
 
         if serializer.is_valid():
