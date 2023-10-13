@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
-    'bitewise',
+    'shared',
+    'budget',
+    'commitment',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -93,7 +95,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'backend.wsgi.application'
-AUTH_USER_MODEL = 'bitewise.User'
+AUTH_USER_MODEL = 'shared.User'
 
 
 # Database
@@ -103,7 +105,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'TEST': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR/'test_db.sqlite3',
+        },
+    },
+
 }
 
 

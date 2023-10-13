@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .serializers import *
-from ..models import *
+from shared.serializers import UserSerializer
+from shared.models import User
 from rest_framework.decorators import action
 
 
@@ -10,11 +10,10 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 
-
+# Create your views here.
 class UserView(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
-
 
 class HomeView(APIView):
     permission_classes = (IsAuthenticated, )

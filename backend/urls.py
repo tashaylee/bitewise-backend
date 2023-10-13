@@ -17,9 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from bitewise.shared import views as sharedviews
-from bitewise.budget import views as budgetviews
-from bitewise.commitment import views as commitmentviews
+from shared import views as sharedviews
+from budget import views as budgetviews
+from commitment import views as commitmentviews
 from rest_framework_simplejwt import views as jwt_views
 
 router = routers.DefaultRouter()

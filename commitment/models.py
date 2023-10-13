@@ -1,5 +1,5 @@
 from django.db import models
-from ..models import User, uuid
+from shared.models import User, uuid
 from django.core.validators import MaxValueValidator
 
 

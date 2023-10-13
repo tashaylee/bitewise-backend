@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from .serializers import *
+from commitment.serializers import *
 from .models import *
 from datetime import datetime
 from django.shortcuts import get_object_or_404

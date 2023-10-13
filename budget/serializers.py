@@ -2,7 +2,6 @@ from rest_framework import serializers
 from .models import Budget
 
 class BudgetSerializer(serializers.ModelSerializer):
-    user_id = serializers.CharField(source='user.id')
     otherAmount = serializers.SerializerMethodField('calculate_other')
 
     class Meta:
