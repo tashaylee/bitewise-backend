@@ -1,1 +1,2 @@
-# bitewise-backend
+# Bitewise Summary
+Do you ever buy a bunch of groceries only to see them go to waste? Or maybe you barely open them, if even? Bitewise is a web app meant to help you save money on food and reduce food waste. You can set a monthly budget for food expenses, and the app will keep track of how much you've spent on groceries, and what you have left over to spend on food elsewhere. How? With Bitewise, you make a commitment to cook X number of meals at home, aka a Meal Commitment. Meal Commitments are limited to ensure you don't over spend. Once a you've completed your meal commitments for the week, you can see how much leftover money you have for other ~more fun~ food experiences!
