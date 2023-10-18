@@ -3,3 +3,4 @@ Pipfile
 *.sqlite3
 *.json
 node_modules
+*.pyc

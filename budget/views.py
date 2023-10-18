@@ -21,5 +21,5 @@ class BudgetView(viewsets.ModelViewSet):
         
         if serializer.is_valid():
             serializer.save(user=user)
-            return Response({'budget_id' : {serializer.instance.id}}, status=200)
+            return Response({'budget_id' : serializer.instance.id}, status=200)
         return Response(serializer.errors,status=400)

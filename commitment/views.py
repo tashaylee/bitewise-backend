@@ -27,7 +27,7 @@ class CommitmentCountView(viewsets.ModelViewSet):
 
         if serializer.is_valid():
             serializer.save(user=user)
-            return Response({'commitment_count_id': {serializer.instance.id}}, status=200)
+            return Response({'commitment_count_id': str(serializer.instance.id)}, status=200)
         return Response(serializer.errors, status=400)
 
 
@@ -53,7 +53,7 @@ class MealCommitmentView(viewsets.ModelViewSet):
 
         if serializer.is_valid():
             serializer.save()
-            return Response({'meal_commitment_id': {serializer.instance.id}}, status=200)
+            return Response({'meal_commitment_id': str(serializer.instance.id)}, status=200)
         return Response(serializer.errors, status=400)
 
     @action(detail=False, methods=['get'])
