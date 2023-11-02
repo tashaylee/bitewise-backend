@@ -20,6 +20,7 @@ from rest_framework import routers
 from shared import views as sharedviews
 from budget import views as budgetviews
 from commitment import views as commitmentviews
+from integrations import views as integrationviews
 from rest_framework_simplejwt import views as jwt_views
 
 router = routers.DefaultRouter()
@@ -36,5 +37,6 @@ urlpatterns = [
     path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('home/', sharedviews.HomeView.as_view(), name ='home'),
-    path('logout/', sharedviews.LogoutView.as_view(), name='logout')
+    path('logout/', sharedviews.LogoutView.as_view(), name='logout'),
+    path('recipes/', integrationviews.EdamamAPIView.as_view(), name='get_edamam_meals')
 ]

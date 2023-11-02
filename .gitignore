@@ -4,3 +4,4 @@ Pipfile
 *.json
 node_modules
 *.pyc
+*.env
