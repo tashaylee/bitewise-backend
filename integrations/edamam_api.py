@@ -22,8 +22,9 @@ class EdamamAPI:
             recipe_label = recipe.get('label', None)
             recipe_url = recipe.get('url', None)
             ingredients = recipe.get('ingredientLines', None)
+            image = recipe.get('image', None)
 
-            recipe_data = {'recipe_label': recipe_label, 'recipe_url': recipe_url, 'ingredients': str(ingredients)}
+            recipe_data = {'recipe_label': recipe_label, 'recipe_url': recipe_url, 'ingredients': ingredients, 'image': image}
             recipe_info.append(recipe_data)
         return recipe_info
         

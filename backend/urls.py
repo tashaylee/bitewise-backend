@@ -23,20 +23,10 @@ from commitment import views as commitmentviews
 from integrations import views as integrationviews
 from rest_framework_simplejwt import views as jwt_views
 
-router = routers.DefaultRouter()
-router.register(r'budgets', budgetviews.BudgetView, 'budget')
-router.register(r'users', sharedviews.UserView, 'user')
-router.register(r'commitmentcounts',
-                commitmentviews.CommitmentCountView, 'commitmentcount')
-router.register(r'mealcommitments',
-                commitmentviews.MealCommitmentView, 'mealcommitments')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
     path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
-    path('home/', sharedviews.HomeView.as_view(), name ='home'),
-    path('logout/', sharedviews.LogoutView.as_view(), name='logout'),
-    path('recipes/', integrationviews.EdamamAPIView.as_view(), name='get_edamam_meals')
+    path('api/recipes/', integrationviews.EdamamAPIView.as_view(), name='recipes'),
 ]

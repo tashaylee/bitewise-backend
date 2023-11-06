@@ -1,12 +1,8 @@
-from rest_framework import generics
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-
 from integrations.edamam_api import EdamamAPI
+from rest_framework.views import APIView
 
-class EdamamAPIView(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated, ]
-
+class EdamamAPIView(APIView):
     edamam_api = EdamamAPI()
 
     def get(self, request):
@@ -16,6 +12,6 @@ class EdamamAPIView(generics.GenericAPIView):
         
         try:
             response = self.edamam_api.get_recipes(max_ingr=max_ingr, max_time=max_time, search_term=search_term)
+            return Response(data=response)
         except Exception as e:
-            response = e
-        return Response(data = response)
+            return Response(data={'error': str(e)})

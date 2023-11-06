@@ -16,7 +16,7 @@ class TestIntegration:
         mock_response = Response(expected_response_data)
 
         with patch('integrations.views.EdamamAPIView.get', return_value=mock_response):
-            response = auth_client.get('/recipes/', data=recipe_data)
+            response = auth_client.get('/api/recipes/', data=recipe_data)
             assert response.status_code == 200
             assert len(response.data) == 20
 
