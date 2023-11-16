@@ -16,10 +16,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework import routers
-from shared import views as sharedviews
-from budget import views as budgetviews
-from commitment import views as commitmentviews
 from integrations import views as integrationviews
 from rest_framework_simplejwt import views as jwt_views
 
@@ -29,4 +25,6 @@ urlpatterns = [
     path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('api/recipes/', integrationviews.EdamamAPIView.as_view(), name='recipes'),
+    path('api/locations/', integrationviews.LocationsAPIView.as_view(), name='locations'),
+    path('api/shopping-lists/', integrationviews.ShoppingListAPIView.as_view(), name='shopping-lists'),
 ]

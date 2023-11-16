@@ -78,6 +78,16 @@ SIMPLE_JWT = {
 
 ROOT_URLCONF = 'backend.urls'
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'api_cache.sqlite3',
+        'OPTIONS': {
+            'TABLE_NAME': 'krogers',
+        }
+    }
+}
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

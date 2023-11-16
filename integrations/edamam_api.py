@@ -15,16 +15,16 @@ class EdamamAPI:
         recipe_info = []
         url = f'{self.__base_url()}q={search_term}&time={max_time}&ingr={max_ingr}'
         response = requests.get(url)
-        hits = response.json().get('hits')
+        if response.status_code == 200:
+            hits = response.json().get('hits')
         
-        for item in hits:
-            recipe = item.get('recipe', None)
-            recipe_label = recipe.get('label', None)
-            recipe_url = recipe.get('url', None)
-            ingredients = recipe.get('ingredientLines', None)
-            image = recipe.get('image', None)
+            for item in hits:
+                recipe = item.get('recipe', None)
+                recipe_label = recipe.get('label', None)
+                recipe_url = recipe.get('url', None)
+                ingredients = recipe.get('ingredientLines', None)
+                image = recipe.get('image', None)
 
-            recipe_data = {'recipe_label': recipe_label, 'recipe_url': recipe_url, 'ingredients': ingredients, 'image': image}
-            recipe_info.append(recipe_data)
+                recipe_data = {'recipe_label': recipe_label, 'recipe_url': recipe_url, 'ingredients': ingredients, 'image': image}
+                recipe_info.append(recipe_data)
         return recipe_info
-        
