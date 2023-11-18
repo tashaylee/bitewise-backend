@@ -1,6 +1,5 @@
 import pytest
 from rest_framework.test import APIClient
-from budget.models import Budget
 from shared.models import User
 from rest_framework_simplejwt.tokens import AccessToken
 
@@ -14,7 +13,7 @@ def user():
     user = User.objects.create_user(
         first_name="dwayne",
         last_name="johnson",
-        email="dwaynetherock@johnson.com",
+        phone="+13478903467",
         username="dwayne johnson",
     )
     return user

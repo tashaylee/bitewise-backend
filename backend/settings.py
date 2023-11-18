@@ -44,9 +44,11 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
+    'phonenumber_field',
     'shared',
-    'budget',
-    'commitment',
+    'ingredients',
+    'store',
+    'integrations',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -148,7 +150,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/New_York'
 
 USE_I18N = True
 
