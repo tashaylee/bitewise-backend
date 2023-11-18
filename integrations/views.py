@@ -40,11 +40,7 @@ class ShoppingListAPIView(APIView):
         store_id = request.data.get('store_id', None)
         
         try:
-            start= time.time()
             response = self.kroger_api.fetch_prices(shopping_list= shopping_list, store_id=store_id)
-            end= time.time()
-            total = end-start
-            print(total)
             return Response(data=response, status=200)
         except Exception as e:
             return Response(data={'error': str(e)})

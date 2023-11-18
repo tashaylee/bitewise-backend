@@ -45,12 +45,19 @@ class KrogerAPI:
         return url
 
     def _set_token(self):
+        def __set_headers(access_token):
+            # sets headers
+            self._headers['Authorization'] = f"Bearer {access_token}"
+            self._headers["Content-Type"] = "application/json"
+
        # checks if kroger bearer tokens are in cache
-        access_token = cache.get('kroger_access_token')
+        access_token = cache.get('kroger_access_token', None)
         expires_at = cache.get('kroger_expires_at', 0)
 
         # checks if tokens are still valid
         if access_token and time.time() < expires_at:
+            if 'Authorization' not in self._headers.keys():
+                __set_headers(access_token)
             return
 
         url = self.__base_url('auth')
@@ -66,8 +73,7 @@ class KrogerAPI:
             cache.set('kroger_expires_at', time.time() + expires_in)
             
             # sets headers
-            self._headers['Authorization'] = f"Bearer {access_token}"
-            self._headers["Content-Type"] = "application/json"
+            __set_headers(access_token)
         
         else:
             return response.text
@@ -86,7 +92,7 @@ class KrogerAPI:
         self._set_token()
         url = self.__base_url('locations')
         params = {
-            'filter.latLong.near': f"{lat},{long}"
+            'filter.latLong.near': f"{39.306346},{-84.278902}"
         }
 
         try:
