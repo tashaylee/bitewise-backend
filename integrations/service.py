@@ -5,7 +5,7 @@ from spacy.lang.en.stop_words import STOP_WORDS
 nlp = spacy.load("en_core_web_sm")
 
 
-class IngredientsService:
+class IntegrationService:
     def __init__(self) -> None:
         self.units = {
             'teaspoon', 'tsp',
@@ -121,4 +121,4 @@ class IngredientsService:
         return False
 
     
-default = IngredientsService()
+default = IntegrationService()

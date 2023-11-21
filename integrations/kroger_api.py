@@ -7,7 +7,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from django.core.cache import cache
 from urllib.parse import urlencode
 
-from ingredients.ingredients_service import default as ingredients_service
+from .service import default as integrations_service
 
 
 # TO DO: external caching + async request or batch endpoints
@@ -118,7 +118,7 @@ class KrogerAPI:
 
         for recipe in shopping_list:
             ingredients = recipe.get('ingredients', [])
-            ingredient_names = ingredients_service.extract_ingredients(ingredients)
+            ingredient_names = integrations_service.extract_ingredients(ingredients)
             price_dict = self.__fetch_recipe_prices(url, params, recipe, ingredient_names)
             item_prices.append(price_dict)
 
@@ -127,6 +127,7 @@ class KrogerAPI:
     def __fetch_recipe_prices(self, url, params, recipe, ingredient_names):
         price_dict = {
             'recipe_label': recipe.get('recipeLabel'),
+            'instructions': recipe.get('instructions'),
             'ingredient_prices': [],
         }
         with ThreadPoolExecutor() as executor:
@@ -166,7 +167,7 @@ class KrogerAPI:
         for item in items:
             price = item.get('price', None)
             if price:
-                current_item_price = ingredients_service.get_promo_price(price)
+                current_item_price = integrations_service.get_promo_price(price)
                 self.__update_ingredient_data(ingredient_data, description, current_item_price)
 
 

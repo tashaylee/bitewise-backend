@@ -1,3 +1,7 @@
-from django.test import TestCase
+import pytest
+from shared.models import User
 
-# Create your tests here.
+@pytest.mark.django_db
+class TestUser:
+    def test_create_user(self, user):
+        assert User.objects.count() == 1

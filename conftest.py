@@ -1,6 +1,7 @@
 import pytest
 from rest_framework.test import APIClient
 from shared.models import User
+from store.models import Store
 from rest_framework_simplejwt.tokens import AccessToken
 
 
@@ -18,6 +19,11 @@ def user():
     )
     return user
 
+@pytest.fixture
+def store_1():
+    return Store.objects.create(
+       name='test store 1'
+    )
 
 @pytest.fixture
 def access_token(user):
