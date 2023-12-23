@@ -9,8 +9,8 @@ class EdamamAPIView(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         search_term = request.query_params.get('search_term', None)
-        max_ingr = request.query_params.get('max_ingr', None)
-        max_time = request.query_params.get('max_time', None)
+        max_ingr = request.query_params.get('max_ingr') or '1%2b'
+        max_time = request.query_params.get('max_time') or '1%2b'
         
         try:
             response = self.edamam_api.get_recipes(max_ingr=max_ingr, max_time=max_time, search_term=search_term)

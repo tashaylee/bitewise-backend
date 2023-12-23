@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'ingredients',
     'store',
     'integrations',
+    'food_product',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
