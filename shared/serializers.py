@@ -10,4 +10,9 @@ class UserSerializer(serializers.ModelSerializer):
         # Combine first_name and last_name to create username
         username = f"{validated_data['first_name']}_{validated_data['last_name']}"
         validated_data['username'] = username
+
+        # Convert PhoneNumber to string
+        phone_number = validated_data.get('phone')
+        if phone_number:
+            validated_data['phone'] = str(phone_number)
         return super().create(validated_data)

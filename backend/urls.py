@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from integrations import views as integrationviews
 from ingredients import views as ingredient_views
+from shared import views as user_views
 from rest_framework import routers
 from rest_framework_simplejwt import views as jwt_views
 
@@ -10,6 +11,7 @@ router.register(r'recipes', integrationviews.EdamamAPIView, basename='recipes')
 router.register(r'locations', integrationviews.LocationsAPIView, basename='locations')
 router.register(r'shopping-lists', integrationviews.ShoppingListAPIView, basename='shopping-lists')
 router.register(r'ingredients', ingredient_views.IngredientView, basename='ingredients')
+router.register(r'users', user_views.UserView, basename='users')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
